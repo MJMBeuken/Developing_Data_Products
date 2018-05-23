@@ -1,0 +1,39 @@
+---
+title: 'Assignment: RMarkdown and Leaflet'
+author: "MJM Beuken"
+date: "23 mei 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+***
+#### Map of locations of Zuyd university of applied science
+####**Date: `r format(Sys.time(), '%d %B, %Y')`**
+
+```{r, warning=FALSE, message=FALSE, fig.align='center'}
+library(leaflet)
+zuydIcon <- makeIcon(
+        iconUrl = "LogoZUYD.png",
+        iconWidth = 31*215/230, iconHeight = 31,
+        iconAnchorX = 31*215/230/2, iconAnchorY = 16
+)
+
+zuydlocationcoordinates <- data.frame(
+        lat = c(50.8812422, 50.8541346, 50.844874, 51.0007335),
+        lng = c(5.9592344, 5.6718614, 5.6869109, 5.8662196),
+        pop = c(5284, 6238, 512, 3953))
+
+Zuydsites <- c(
+        "<a href='http://www.zuyd.nl/'>Zuyd University of applied science Heerlen</a>",
+        "<a href='http://www.zuyd.nl/'>Zuyd University of applied science Maastricht</a>",
+        "<a href='http://www.zuyd.nl/'>Zuyd University of applied science Conservatorium</a>",
+        "<a href='http://www.zuyd.nl/'>Zuyd University of applied science Sittard</a>"
+)
+
+zuydlocationcoordinates %>% 
+        leaflet() %>%
+        addTiles() %>%
+        addMarkers(icon = zuydIcon, popup = Zuydsites)
+```
